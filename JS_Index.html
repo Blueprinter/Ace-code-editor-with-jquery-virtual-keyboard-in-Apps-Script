@@ -1,0 +1,89 @@
+    <script>
+/*
+  The code in this file comes from:
+  https://jsfiddle.net/Mottie/7kpae2xv/
+
+
+*/
+
+$(window).load(function () {
+    
+    // ==========================
+    // Middleman (stuff to communicate between keyboard and editor)
+    // ==========================
+    prevEndIndx = 0;
+    processInput = function ( keyboard, editor ) {
+    /* ( Keyboard, Ace Editor ) -> same Keyboard
+    * 
+    * Sends appropriate commands to the editor based on
+    * key pressed on Keyboard.
+    */
+	  	var last = keyboard.last;
+
+	  	if ( last.key === 'Bksp' ) {  // If they want to delete
+	  		editor.remove( 'left' );
+	  	} else {  // If they're entering text
+			// Get just the value of the last key (better way?)
+		  	var newInput = last.val.substring( prevEndIndx, last.end )
+            // Insert it at the cursor
+		  	editor.insert( newInput );
+	  	}
+        
+		// Prepare for the next go around
+	  	prevEndIndx = last.end;
+        // Why not, since we're skipping 'accept' anyway? Will be easier for people using keyboards.
+	  	editor.focus();
+
+	  	return keyboard;
+	};  // End processInput()
+    
+    
+    // ==========================
+    // Ace editor
+    // ==========================
+	var editor = ace.edit( 'editor' );
+	editor.setTheme( 'ace/theme/monokai' );
+	editor.getSession().setMode( 'ace/mode/javascript' );
+  editor.$blockScrolling = Infinity;
+    
+    // ==========================
+    // Keyboard
+    // ==========================
+    $( '#keyboard' ).keyboard({
+        keyBinding: 'mousedown touchstart',
+        autoAccept: true,
+        alwaysOpen: true,
+        position: {
+            of: null,
+            my: 'center top',
+            at: 'center top',
+            at2: 'center bottom'
+        },
+        layout: 'custom',
+        customLayout: {
+            'normal': [
+                '` 1 2 3 4 5 6 7 8 9 0 - = {bksp}',
+                '{tab} q w e r t y u i o p [ ] \\',
+                'a s d f g h j k l ; \' {enter}',
+                '{shift} z x c v b n m , . / {shift}',
+                '{space} {left} {right}'],
+                'shift': [
+                '~ ! @ # $ % ^ & * ( ) _ + {bksp}',
+                '{tab} Q W E R T Y U I O P { } |',
+                'A S D F G H J K L : " {enter}',
+                '{shift} Z X C V B N M < > ? {shift}',
+                '{space} {left} {right}']
+        },
+        
+        change: function ( evnt, keyboard, elem ) {
+            processInput( keyboard, editor );
+        }
+    });  // End keyboard instantiation
+    
+    var keyboard = $( '#keyboard' ).getkeyboard().reveal();
+});
+
+    
+    </script>
+    
+    
