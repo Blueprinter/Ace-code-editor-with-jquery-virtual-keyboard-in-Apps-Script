@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<!--
+  The code in this file H_Index.html has no license -
+  You can do whatever you want with it -
+-->
+
+  <head>
+    <script src="https://ajaxorg.github.io/ace-builds/src-noconflict/ace.js" type="text/javascript" charset="utf-8"></script>
+    <script src="https://code.jquery.com/jquery-1.9.1.js"></script>
+      
+    <?!= loadCSS_(["CSS_Index","CSS_Keyboard"]) ?>
+    <?!= getSkrpt_(["JS_JQuery_UI","JS_Keyboard"]) ?>
+  
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+
+  </head>
+  <body>
+   
+    <noscript>
+      You need to enable JavaScript to run this app.
+    </noscript>
+
+    <p><i>Example of using keyboard with Ace editor. Both textarea and 'accept' are ignored.</i></p>
+    <hr>
+    <div id="wrap">
+      <div id='editor'></div>
+      <textarea name="keyboard" id="keyboard" style="border:none"></textarea>
+    </div>
+
+    <?!= getSkrpt_(["JS_Index"]) ?>
+
+  </body>
+
+</html>
+
